@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      library: 図書館
+    attributes:
+      library:
+        name: 名前
+        address: 住所
+        access: アクセス
+        study_space: 勉強スペース
+        electrical_outlet: コンセントの有無
+        image: 写真
+        detail: 詳細コメント
