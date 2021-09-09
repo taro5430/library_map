@@ -17,8 +17,12 @@
  @import "bootstrap";
 
  body {
+  min-height: 100vh;
   box-sizing: border-box;
   color: #333333;
+}
+.notifications{
+  text-align: center;
 }
 ul{
   list-style: none;
