@@ -1,0 +1,59 @@
+<div class="container library-show">
+  <div class="row">
+    <div class="col-md-8">
+      <% if @library.image? %>
+        <%= image_tag @library.image.url, class: "library-image" %>
+      <% else %>
+        <%= image_tag 'no-image.png', class: "library-image" %>
+      <% end %>
+      <div class="library-info-heading pt-2">
+        <h4><span>図書館情報</span></h4>
+      </div>
+      <table class="library-info">
+        <tbody>
+          <tr>
+            <th>図書館名</th>
+            <td><%= @library.name %></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td><%= @library.address %></td>
+          </tr>
+          <tr>
+            <th>アクセス</th>
+            <td><%= @library.access %></td>
+          </tr>
+          <tr>
+            <th>勉強スペース</th>
+            <td><%= @library.study_space %></td>
+          </tr>
+          <tr>
+            <th>コンセントの有無</th>
+            <td><%= @library.electrical_outlet %></td>
+          </tr>
+          <tr>
+            <th>詳細コメント</th>
+            <td><%= @library.detail %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="user-info pt-2 mt-2">
+        <div class="user-info-heading mt-2">
+          <p><span class="px-4 py-2 ">登録者</span></p>
+        </div>
+        <div class="user-icon">
+          <% if current_user.image? %>
+            <%= image_tag current_user.image.url, class:"host-icon" %>
+          <% else %>
+            <%= image_tag 'default_icon.jpg', class:"host-icon" %>
+          <% end %>
+        </div>
+        <div class="user-name pt-2">
+          <p><%= @user.name %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
