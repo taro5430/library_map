@@ -3,5 +3,5 @@ class Library < ApplicationRecord
   
   belongs_to :user
 
-  mount_uploader :image, ImageUploader
+  has_one_attached :avatar
 end

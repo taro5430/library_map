@@ -51,7 +51,7 @@ class LibrariesController < ApplicationController
   private
 
   def library_params
-    params.require(:library).permit(:name, :address, :access, :study_space, :electrical_outlet, :image, :detail)
+    params.require(:library).permit(:name, :address, :access, :study_space, :electrical_outlet, :avatar, :detail)
   end
 
 end

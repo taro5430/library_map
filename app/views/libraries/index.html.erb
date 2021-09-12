@@ -7,8 +7,8 @@
           <div class="libraries-frame-inner">
             <%= link_to library do %>
               <div class="libraries-image-frame">
-                <% if library.image? %>
-                  <%= image_tag library.image.url, class: "libraries-image" %>
+                <% if library.avatar.attached? %>
+                  <%= image_tag library.avatar, class: "libraries-image" %>
                 <% else %>
                   <%= image_tag 'no-image.png', class: "libraries-image" %>
                 <% end %>
