@@ -1,9 +1,5 @@
 class LibrariesController < ApplicationController
   def index
-    @libraries = current_user.libraries.all
-  end
-  
-  def display
     @libraries = Library.all
   end
 
@@ -27,6 +23,12 @@ class LibrariesController < ApplicationController
     @user = User.find_by(id: @library.user_id)
   end
 
+  def search
+    if params[:keyword].present?
+      @libraries = Library.search(params[:keyword])
+    end
+  end
+  
   def edit
     @library = Library.find(params[:id])
   end
@@ -45,7 +47,7 @@ class LibrariesController < ApplicationController
     @library = Library.find(params[:id])
     @library.destroy
     flash[:danger] = "削除しました"
-    redirect_to :libraries
+    redirect_to :pages_profile
   end
 
   private
