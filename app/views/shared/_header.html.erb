@@ -8,27 +8,46 @@
       <div class="collapse navbar-collapse bg-dark" id="navbarNav">
         <ul class="navbar-nav ms-auto nav-list">
           <li class="nav-item">
+            <%= link_to "Map", pages_home_path(anchor: "gmap"), {class: "nav-link"} %>
+          </li>
+          <li class="nav-item">
             <%= link_to "図書館登録", :new_library, {class: "nav-link"} %>
           </li>
           <li class="nav-item">
-            <%= link_to "図書館一覧", :libraries_display, {class: "nav-link"}  %>
+            <%= link_to "図書館一覧", :libraries, {class: "nav-link"}  %>
           </li>
           <li class="nav-item">
-            <%= link_to "登録済み図書館一覧", :libraries, {class: "nav-link"}  %>
+          <%= link_to "ログアウト", :destroy_user_session, {method: :delete, class: "nav-link"}  %>
           </li>
           <li class="nav-item">
-            <%= link_to "設定", edit_user_registration_path, {class: "nav-link"}  %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "ログアウト", destroy_user_session_path, {method: :delete, class: "nav-link"}  %>
+            <%= link_to "/pages/profile", {class:"nav-link"} do %>
+              <% if current_user.avatar.present? %>
+                <%= image_tag current_user.avatar, alt: "アイコン画像",class:"header-host-icon" %>
+              <% else %>
+                <%= image_tag 'default_icon.jpg',class:"mx-3 p-1 header-host-icon" %>
+              <% end %>
+            <% end %>
           </li>
         </ul>
       </div>
     <% else %>
       <div class="collapse navbar-collapse ms-auto" id="navbarNav">
         <ul class="navbar-nav ms-auto nav-list">
-          <%= link_to '新規登録', new_user_registration_path, class:"btn btn-primary mx-3 my-2" %>
-          <%= link_to 'ログイン', new_user_session_path, class:"btn btn-secondary mx-3 my-2" %>
+          <li class="nav-item">
+            <%= link_to "Library map for studiesとは", :pages_introduction, {class: "nav-link mx-3 my-2"} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Map", pages_home_path(anchor: "gmap"), {class: "nav-link mx-3 my-2"} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "図書館一覧", :libraries, {class: "nav-link mx-3 my-2"}  %>
+          </li>
+          <li class="nav-item">
+            <%= link_to '新規登録', :new_user_registration, {class:"nav-link mx-3 my-2"} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'ログイン', :new_user_session, {class:"nav-link mx-3 my-2"} %>
+          </li>
         </ul>
       </div>
     <% end %>
