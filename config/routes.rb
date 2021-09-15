@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   root 'pages#home'
   get 'pages/home'
+  get 'pages/introduction'
+  get 'pages/profile'
   devise_for :users
+  get '/libraries/search', to: 'libraries#search'
   resources :libraries
-  get '/libraries_display' ,to: 'libraries#display'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
