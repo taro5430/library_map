@@ -1,7 +1,7 @@
 <div class="notifications">
   <% flash.each do |key, value| %>
-    <p class="alert-<%= key %>">
+    <div class="alert-<%= key %> alert-<%= bootstrap_alert(key)%>">
       <%= value %>
-    </p>
+    </div>
   <% end %>
 </div>
