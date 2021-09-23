@@ -24,7 +24,7 @@
               <% if current_user.avatar.present? %>
                 <%= image_tag current_user.avatar, alt: "アイコン画像",class:"header-host-icon" %>
               <% else %>
-                <%= image_tag 'default_icon.jpg',class:"mx-3 p-1 header-host-icon" %>
+                <%= image_tag 'default_icon.jpg', alt: "アイコン画像", class:"mx-3 p-1 header-host-icon" %>
               <% end %>
             <% end %>
           </li>
