@@ -20,11 +20,11 @@
         </div>
         <div class="update-content">
           <%= f.label :study_space, "勉強スペース", class:"mb-2 required-a" %>
-          <%= f.select :study_space, {'20席以上':'20席以上','10席以上':'10席以上','10席未満':'10席未満','なし':'なし'},{ include_blank: '選択してください' },{ class:"form-control mb-4"} %>
+          <%= f.select :study_space, {'50席以上':'50席以上','20席以上':'20席以上','10席以上':'10席以上','10席未満':'10席未満','なし':'なし'},{ include_blank: '選択してください' },{ class:"form-control mb-4"} %>
         </div>
         <div class="update-content">
           <%= f.label :electrical_outlet, "コンセントの有無", class:"mb-2 required-a" %>
-          <%= f.select :electrical_outlet, {'有り':'有り','一部有り':'一部有り','なし':'なし'}, { include_blank: '選択してください' }, {class:"form-control mb-4"} %>
+          <%= f.select :electrical_outlet, {'あり':'あり','一部座席あり':'一部座席あり','なし':'なし'}, { include_blank: '選択してください' }, {class:"form-control mb-4"} %>
         </div>
         <div class="update-content">
           <%= f.label :avatar, "写真", class:"mb-2" %>
