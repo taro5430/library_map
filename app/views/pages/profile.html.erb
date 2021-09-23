@@ -38,16 +38,16 @@
                       <%= image_tag 'no-image.png', class: "libraries-image" %>
                     <% end %>
                   </div>
+                  <div class="libraries-information pt-3 px-3">
+                    <p class="libraries-name mb-2"><%= library.name %></p>
+                    <p class="libraries-address mb-2"><%= library.address %></p>
+                  </div>
                 <% end %>
-                <div class="libraries-information">
-                  <p class="libraries-name"><%= library.name %></p>
-                  <p class="libraries-address"><%= library.address %></p>
-                  <div class="edit-button">
-                    <%= link_to "編集する",[:edit,library] %>
-                  </div>
-                  <div class="destroy-button">
-                    <%= link_to "削除する", library, method: :delete, data:{confirm:"本当に削除しますか"} %>
-                  </div>
+                <div class="edit-button ps-3 mb-2">
+                  <%= link_to "編集する",[:edit,library], class: "edit-link" %>
+                </div>
+                <div class="delete-button ps-3 mb-2">
+                  <%= link_to "削除する", library, method: :delete, data:{confirm:"本当に削除しますか"}, class: "delete-link" %>
                 </div>
               </div>
             </div>
