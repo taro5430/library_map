@@ -39,6 +39,7 @@ class LibrariesController < ApplicationController
       flash[:success] = "更新しました"
       redirect_to @library
     else
+      flash[:danger] = "更新できませんでした"
       render "edit"
     end
   end
