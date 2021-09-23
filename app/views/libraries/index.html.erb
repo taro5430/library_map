@@ -17,16 +17,16 @@
             <%= link_to library do %>
               <div class="libraries-image-frame">
                 <% if library.avatar.attached? %>
-                  <%= image_tag library.avatar, class: "libraries-image" %>
+                  <%= image_tag library.avatar, alt: '図書館画像', class: "libraries-image" %>
                 <% else %>
-                  <%= image_tag 'no-image.png', class: "libraries-image" %>
+                  <%= image_tag 'no-image.png', alt: '図書館画像', class: "libraries-image" %>
                 <% end %>
               </div>
+              <div class="libraries-information">
+                <p class="libraries-name"><%= library.name %></p>
+                <p class="libraries-address"><%= library.address %></p>
+              </div>
             <% end %>
-            <div class="libraries-information">
-              <p class="libraries-name"><%= library.name %></p>
-              <p class="libraries-address"><%= library.address %></p>
-            </div>
           </div>
         </div>
       <% end %>
