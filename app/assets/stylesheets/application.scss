@@ -16,10 +16,14 @@
 
  @import "bootstrap";
 
+ //common
  body {
   min-height: 100vh;
   box-sizing: border-box;
   color: #333333;
+  position:relative;
+  display: flex;
+  flex-flow: column;
 }
 .notifications{
   text-align: center;
@@ -33,6 +37,11 @@ a{
 a:hover,.nav-link:hover{
   color: skyblue;
 }
+.container{
+  flex:1;
+}
+
+//header
 .header-logo{
   color:#fff;
   font-size: 35px;
@@ -43,9 +52,19 @@ a:hover,.nav-link:hover{
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
+.nav-item{
+  display:flex;
+  align-items: center;
+}
 .nav-link{
   color:#fff;
   font-size: 15px;
+}
+.header-host-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 .required-a::after {
   content: "必須";
@@ -56,12 +75,14 @@ a:hover,.nav-link:hover{
   padding: 4px;
   margin: 0 5px;
 }
+
+//footer
 .footer {
   width: 100%;
   height: 80px;
   background-color: #111;
   color: #fff;
-  position:relative
+  position:relative;
 }
 .footer p{
   position:absolute;
