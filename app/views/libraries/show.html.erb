@@ -1,0 +1,91 @@
+<div class="container library-show">
+  <div class="row">
+    <div class="col-md-9 col-sm-12">
+      <div class="library-image-box">
+        <% if @library.avatar.attached? %>
+          <%= image_tag @library.avatar, class: "library-image" %>
+        <% else %>
+          <%= image_tag 'no-image.png', class: "library-image" %>
+        <% end %>
+      </div>
+      <div class="library-info-heading p-2 mt-2">
+        <h4><span class="px-4 py-2">図書館情報</span></h4>
+      </div>
+      <table class="library-info">
+        <tbody>
+          <tr>
+            <th>図書館名</th>
+            <td><%= @library.name %></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>
+              <%= @library.address %>
+              <div id="library-map"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>アクセス</th>
+            <td><%= @library.access %></td>
+          </tr>
+          <tr>
+            <th>勉強スペース</th>
+            <td><%= @library.study_space %></td>
+          </tr>
+          <tr>
+            <th>コンセントの有無</th>
+            <td><%= @library.electrical_outlet %></td>
+          </tr>
+          <tr>
+            <th>詳細コメント</th>
+            <td><%= @library.detail %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <div class="user-info pt-2 mt-2 col-md-12 col-sm-12">
+        <div class="user-info-heading mt-2">
+          <p><span class="px-4 py-2">登録者</span></p>
+        </div>
+        <% if @user.present? %>
+          <div class="user-icon">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, class:"host-icon" %>
+            <% else %>
+              <%= image_tag 'default_icon.jpg', class:"host-icon" %>
+            <% end %>
+          </div>
+          <div class="user-name pt-2">
+            <p><%= @user.name %></p>
+          </div>
+        <% else %>
+          <p>退会しました</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMap(){
+    geocoder =  new google.maps.Geocoder()
+    mapInstance = new google.maps.Map(document.getElementById('library-map'), {
+      center: {
+        lat: <%= @library.latitude %>,
+        lng: <%= @library.longitude %>
+      },
+      zoom: 14
+    });
+
+    pos = new google.maps.LatLng(
+      <%= @library.latitude %>,
+      <%= @library.longitude %>
+    );
+    default_marker = new google.maps.Marker({
+      map: mapInstance,
+      position: pos
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhwT1YDk1ivaKA538KPwaNqFgkSSuJEkc&callback=initMap" async defer></script>

@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="library-register-box col-7 my-5 p-4">
+      <div class="register-heading mb-4">
+        <h5>図書館情報編集</h5>
+      </div>
+      <%= render "shared/error", obj: @library %>
+      <%= form_with model: @library do |f| %>
+        <div class="update-content">
+          <%= f.label :name, "図書館名", class:"mb-2 required-a" %>
+          <%= f.text_field :name, class:"form-control mb-4", placeholder:"図書館名を入力" %>
+        </div>
+        <div class="update-content">
+          <%= f.label :address, "住所", class:"mb-2 required-a" %>
+          <%= f.text_field :address, class:"form-control mb-4", placeholder:"住所を入力"  %>
+        </div>
+        <div class="update-content">
+          <%= f.label :access, "アクセス", class:"mb-2" %></th>
+          <%= f.text_field :access, class:"form-control mb-4", placeholder:"ex)東京駅から徒歩10分" %>
+        </div>
+        <div class="update-content">
+          <%= f.label :study_space, "勉強スペース", class:"mb-2 required-a" %>
+          <%= f.select :study_space, {'50席以上':'50席以上','20席以上':'20席以上','10席以上':'10席以上','10席未満':'10席未満','なし':'なし'},{ include_blank: '選択してください' },{ class:"form-control mb-4"} %>
+        </div>
+        <div class="update-content">
+          <%= f.label :electrical_outlet, "コンセントの有無", class:"mb-2 required-a" %>
+          <%= f.select :electrical_outlet, {'あり':'あり','一部座席あり':'一部座席あり','なし':'なし'}, { include_blank: '選択してください' }, {class:"form-control mb-4"} %>
+        </div>
+        <div class="update-content">
+          <%= f.label :avatar, "写真", class:"mb-2" %>
+          <%= f.file_field :avatar, class:"form-control mb-4" %>
+        </div>
+        <div class="update-content">
+          <%= f.label :detail, "詳細コメント", class:"mb-2" %>
+          <%= f.text_area :detail, class:"form-control mb-4", placeholder:"より詳細な勉強スペースやコンセントの数、勉強のしやすさ、混雑具合等その他なんでもコメントお願いします。" %>
+        </div>
+        <div class="update-content">
+          <div class="row justify-content-center">
+            <%= f.submit "編集完了", class: "col-md-4 btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
