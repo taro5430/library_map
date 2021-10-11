@@ -15,23 +15,28 @@ services:
       - db
     stdin_open: true
     tty: true
-    command: bundle exec puma -C config/puma.rb
+    # =========ローカルと本番切り替え===========
+    command: bundle exec puma -C config/puma.rb -e production
+    # command: bundle exec puma -C config/puma.rb
+    # ======================================
 
-  db:
-    platform: linux/x86_64
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: library_map_development
-    ports:
-      - '3306:3306'
-    volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - library_map-network
-    command: --innodb-use-native-aio=0
+# =========ローカルと本番切り替え===========
+  # db:
+  #   platform: linux/x86_64
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_USERNAME: root
+  #     MYSQL_PASSWORD: password
+  #     MYSQL_DATABASE: library_map_development
+  #   ports:
+  #     - '3306:3306'
+  #   volumes:
+  #     - db-data:/var/lib/mysql
+  #   networks:
+  #     - library_map-network
+  #   command: --innodb-use-native-aio=0
+  # ======================================
 
   web:
     build:
