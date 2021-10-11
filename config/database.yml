@@ -13,9 +13,9 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['LIBRARY_MAP_DATABASE_USERNAME'] %>
-  password: <%= ENV['LIBRARY_MAP_DATABASE_PASSWORD'] %>
-  host: localhost
+  username: root
+  password: password
+  host: db
 
 development:
   <<: *default
@@ -50,7 +50,12 @@ test:
 #
 production:
   <<: *default
-  database: aws_library_map_app_production
-  username: root
-  password: <%= Rails.application.credentials.db[:password] %>
-  host: <%= Rails.application.credentials.db[:hostname] %>
+  database: library_map_production
+  database: <%= ENV['DB_DATABASE'] %>
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_general_ci
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
