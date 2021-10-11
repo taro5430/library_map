@@ -1,0 +1,57 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/library_map
+      - public-data:/library_map/public
+      - tmp-data:/library_map/tmp
+      - log-data:/library_map/log
+    ports:
+      - 3000:3000
+    networks:
+      - library_map-network
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+    command: bundle exec puma -C config/puma.rb
+
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: library_map_development
+    ports:
+      - '3306:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - library_map-network
+    command: --innodb-use-native-aio=0
+
+  web:
+    build:
+      context: ./nginx_docker
+    volumes:
+      - public-data:/library_map/public
+      - tmp-data:/library_map/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    networks:
+      - library_map-network
+
+volumes:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
+
+networks:
+  library_map-network:
+    external: true
