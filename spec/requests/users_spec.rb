@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   let!(:user) { create(:user) }
-  
+
   describe 'registration #new' do
     it 'responds successfully' do
       get new_user_registration_path
@@ -40,9 +40,9 @@ RSpec.describe "Users", type: :request do
       end
 
       it 'create user successfully' do
-        expect{
+        expect do
           post user_registration_path, params: { user: user_params }
-        }.to change(User, :count).by(1)
+        end.to change(User, :count).by(1)
       end
 
       it 'redirect to root' do
@@ -58,9 +58,9 @@ RSpec.describe "Users", type: :request do
       end
 
       it 'create user not successfully' do
-        expect{
+        expect do
           post user_registration_path, params: { user: invalid_user_params }
-        }.to_not change(User, :count)
+        end.not_to change(User, :count)
       end
 
       it 'show error message' do
@@ -72,8 +72,8 @@ RSpec.describe "Users", type: :request do
   end
 
   describe 'registration #update' do
-    let(:update_params) { {name: "updateuser", current_password: user.password} }
-    let(:invalid_update_params) { {name: nil, current_password: user.password} }
+    let(:update_params) { { name: "updateuser", current_password: user.password } }
+    let(:invalid_update_params) { { name: nil, current_password: user.password } }
 
     before do
       sign_in(user)
@@ -81,32 +81,32 @@ RSpec.describe "Users", type: :request do
 
     context 'valid params' do
       it 'responds successfully' do
-        put user_registration_path, params: {user: update_params}
+        put user_registration_path, params: { user: update_params }
         expect(response).to have_http_status 302
       end
 
       it 'update user information' do
-        expect{
-          put user_registration_path, params: {user: update_params }
-        }.to change { User.find(user.id).name }.from('testuser').to('updateuser')
+        expect do
+          put user_registration_path, params: { user: update_params }
+        end.to change { User.find(user.id).name }.from('testuser').to('updateuser')
       end
 
       it 'redirect to root' do
-        put user_registration_path, params: {user: update_params } 
+        put user_registration_path, params: { user: update_params }
         expect(response).to redirect_to root_path
       end
-   end
+    end
 
-   context 'invalid params' do
+    context 'invalid params' do
       it 'responds successfully' do
         put user_registration_path, params: { user: invalid_update_params }
         expect(response).to have_http_status 200
       end
 
       it 'update user information not successfully' do
-        expect{
+        expect do
           put user_registration_path, params: { user: invalid_update_params }
-        }.to_not change( User.find(user.id), :name)
+        end.not_to change(User.find(user.id), :name)
       end
 
       it 'show errow message' do
@@ -128,9 +128,9 @@ RSpec.describe "Users", type: :request do
     end
 
     it 'delete user' do
-      expect{
+      expect do
         delete user_registration_path
-      }.to change(User, :count).by(-1)
+      end.to change(User, :count).by(-1)
     end
 
     it 'redirect to' do
@@ -147,7 +147,7 @@ RSpec.describe "Users", type: :request do
   end
 
   describe 'session #create' do
-    let(:login_params) { {email: user.email, password: user.password} }
+    let(:login_params) { { email: user.email, password: user.password } }
     let(:invalid_login_params) { { email: user.email, password: "invalidpassword" } }
 
     context 'valid params' do
@@ -177,7 +177,7 @@ RSpec.describe "Users", type: :request do
         expect(response.body).to include 'Eメールまたはパスワードが違います。'
       end
     end
-  end 
+  end
 
   describe 'session #destroy' do
     before do

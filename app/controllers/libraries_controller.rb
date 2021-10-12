@@ -18,7 +18,7 @@ class LibrariesController < ApplicationController
     end
   end
 
-  def show 
+  def show
     @library = Library.find(params[:id])
     @user = User.find_by(id: @library.user_id)
   end
@@ -28,7 +28,7 @@ class LibrariesController < ApplicationController
       @libraries = Library.search(params[:keyword])
     end
   end
-  
+
   def edit
     @library = Library.find(params[:id])
   end
@@ -56,5 +56,4 @@ class LibrariesController < ApplicationController
   def library_params
     params.require(:library).permit(:name, :address, :access, :study_space, :electrical_outlet, :avatar, :detail, :latitude, :longitude)
   end
-
 end
