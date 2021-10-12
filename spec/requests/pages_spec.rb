@@ -8,6 +8,7 @@ RSpec.describe "Pages", type: :request do
     before do
       get pages_home_path
     end
+
     it "responds successfully" do
       expect(response).to have_http_status 200
     end
@@ -24,6 +25,7 @@ RSpec.describe "Pages", type: :request do
     before do
       sign_in(user)
     end
+
     it "responds successfully" do
       get pages_profile_path
       expect(response).to have_http_status 200

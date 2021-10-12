@@ -45,9 +45,9 @@ RSpec.describe "Libraries", type: :request do
       end
 
       it 'save library sucessfully' do
-        expect{
-          post libraries_path, params: { library: library_params } 
-        }.to change(user.libraries, :count).by(1)
+        expect do
+          post libraries_path, params: { library: library_params }
+        end.to change(user.libraries, :count).by(1)
       end
 
       it 'redirect to show page' do
@@ -63,9 +63,9 @@ RSpec.describe "Libraries", type: :request do
       end
 
       it 'save library not sucessfully' do
-        expect{
-          post libraries_path, params: { library: invalid_library_params } 
-        }.to_not change(user.libraries, :count)
+        expect do
+          post libraries_path, params: { library: invalid_library_params }
+        end.not_to change(user.libraries, :count)
       end
 
       it 'show error message' do
@@ -115,8 +115,8 @@ RSpec.describe "Libraries", type: :request do
 
   describe '#update' do
     let!(:library) { create(:library, user_id: user.id) }
-    let(:update_library_params ) { attributes_for(:library, :update) }
-    let(:invalid_library_params ) { attributes_for(:library, :invalid) }
+    let(:update_library_params) { attributes_for(:library, :update) }
+    let(:invalid_library_params) { attributes_for(:library, :invalid) }
 
     before do
       sign_in(user)
@@ -129,9 +129,9 @@ RSpec.describe "Libraries", type: :request do
       end
 
       it 'update detail successfully' do
-        expect{
+        expect do
           put library_path(library.id), params: { library: update_library_params }
-        }.to change { Library.find(library.id).detail }.from('testdetail').to('updatedetail')
+        end.to change { Library.find(library.id).detail }.from('testdetail').to('updatedetail')
       end
 
       it 'redirect to show page' do
@@ -147,9 +147,9 @@ RSpec.describe "Libraries", type: :request do
       end
 
       it 'update not successfully' do
-        expect{
+        expect do
           put library_path(library.id), params: { library: invalid_library_params }
-        }.to_not change(Library.find(library.id), :name)
+        end.not_to change(Library.find(library.id), :name)
       end
 
       it 'show error message' do
@@ -165,16 +165,16 @@ RSpec.describe "Libraries", type: :request do
     before do
       sign_in(user)
     end
-  
+
     it 'responds successfully' do
       delete library_path(library.id)
       expect(response).to have_http_status 302
     end
 
     it 'delete libarary' do
-      expect{
+      expect do
         delete library_path(library.id)
-      }.to change(user.libraries, :count).by(-1)
+      end.to change(user.libraries, :count).by(-1)
     end
 
     it 'redirect to index' do

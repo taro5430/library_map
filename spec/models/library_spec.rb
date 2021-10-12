@@ -6,7 +6,7 @@ RSpec.describe Library, type: :model do
 
     it "is valid with name,address,access,study_space,electrical_outlet" do
       expect(library).to be_valid
-    end 
+    end
 
     it "is not valid without name" do
       library.name = ''
@@ -36,6 +36,7 @@ RSpec.describe Library, type: :model do
 
   describe 'geocoder' do
     let!(:library) { create(:library, address: '東京都港区芝公園４丁目２−８') }
+
     it 'get latitude and longitude' do
       expect(library.latitude).not_to be_nil
       expect(library.longitude).not_to be_nil
@@ -51,25 +52,25 @@ RSpec.describe Library, type: :model do
     context "when it is match with keyword" do
       it "display libraries that include name keyword" do
         expect(Library.search('神奈川')).to include library1
-        expect(Library.search('神奈川')).to_not include(library2, library3, library4)
+        expect(Library.search('神奈川')).not_to include(library2, library3, library4)
       end
 
       it "display libraries that include address keyword" do
         expect(Library.search('横浜')).to include library2
-        expect(Library.search('横浜')).to_not include(library1, library3, library4)
+        expect(Library.search('横浜')).not_to include(library1, library3, library4)
       end
-        
+
       it "display libraries that include access keyword" do
         expect(Library.search('みなとみらい')).to include library3
-        expect(Library.search('みなとみらい')).to_not include(library1, library2, library4)
+        expect(Library.search('みなとみらい')).not_to include(library1, library2, library4)
       end
 
       it "display libraries that include detail keyword" do
         expect(Library.search('静か')).to include library4
-        expect(Library.search('静か')).to_not include(library1, library2, library3)
+        expect(Library.search('静か')).not_to include(library1, library2, library3)
       end
     end
-    
+
     context "when it is not match with keyword" do
       it "display no library that include keyword" do
         expect(Library.search('アメリカ')).to be_empty

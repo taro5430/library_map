@@ -135,7 +135,7 @@ RSpec.describe "Libraries", type: :system do
         click_on libraryA.name
         expect(current_path).to eq library_path(libraryA.id)
       end
-      
+
       it 'click the edit link' do
         find('.edit-link').click
         expect(current_path).to eq edit_library_path(libraryA.id)
