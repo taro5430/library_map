@@ -53,6 +53,7 @@ jobs:
               --format progress --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml \
               $TEST_FILES
+          no_output_timeout: 20m
 
       - store_test_results:
           path: /tmp/test-results
