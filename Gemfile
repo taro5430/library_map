@@ -38,6 +38,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem 'pry-rails'
   gem 'rexml'
+  gem 'rspec_junit_formatter'
 end
 
 group :development do
