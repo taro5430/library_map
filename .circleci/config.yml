@@ -8,8 +8,8 @@ jobs:
 
       - image: circleci/mysql:5.7
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_ROOT_HOST: '%'
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          MYSQL_ROOT_HOST: '%'
 
     working_directory: ~/library_map
 
@@ -34,24 +34,58 @@ jobs:
       - run: mv config/database.yml.ci config/database.yml
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
+      - run:
+          name: yarn Install
+          command: yarn install
+      - run: bundle exec bin/webpack
 
       - run:
           name: Rubocop
           command: bundle exec rubocop
 
       - run:
-        name: RSpec
-        command: |
-          mkdir /tmp/test-results
-          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
-            circleci tests split --split-by=timings)"
-          bundle exec rspec \
-            --format progress --format RspecJunitFormatter \
-            --out /tmp/test-results/rspec.xml \
-            $TEST_FILES
+          name: RSpec
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
+              circleci tests split --split-by=timings)"
+            bundle exec rspec \
+              --format progress --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec.xml \
+              $TEST_FILES
+          no_output_timeout: 20m
 
       - store_test_results:
-        path: /tmp/test-results
+          path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+          
+  deploy:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 97:14:c9:6d:27:80:a8:e7:de:64:9b:29:37:89:56:67
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd /library_map && git pull'
+      - run:
+          name: docker-compose up
+          command: |
+            docker-compose build
+            docker-compose run app rails assets:precompile RAILS_ENV=production
+            docker-compose up -d
+      - run: docker-compose exec app rails active_storage:install db:migrate RAILS_ENV=production
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
