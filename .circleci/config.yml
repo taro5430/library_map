@@ -68,7 +68,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - 97:14:c9:6d:27:80:a8:e7:de:64:9b:29:37:89:56:67
+            - 52:fc:72:15:a5:4e:58:e4:ab:9c:13:c7:ba:82:0a:de
       - run: ssh ${USER_NAME}@${HOST_NAME} 'cd /library_map && git pull'
       - run:
           name: docker-compose up
