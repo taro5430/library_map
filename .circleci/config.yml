@@ -73,7 +73,8 @@ jobs:
       - run:
           name: docker-compose up
           command: |
-            docker-compose build
+            docker-compose 
+            docker network create library_map_network
             docker-compose run app rails assets:precompile RAILS_ENV=production
             docker-compose up -d
       - run: docker-compose exec app rails active_storage:install db:migrate RAILS_ENV=production
