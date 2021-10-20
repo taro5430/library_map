@@ -69,7 +69,13 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - 52:fc:72:15:a5:4e:58:e4:ab:9c:13:c7:ba:82:0a:de
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd /library_map && git pull && echo "$RAILS_MASTER_KEY" > config/master.key'
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd /library_map && git pull'
+      - run: 
+          name: setup secret files
+          command: |
+            touch ./config/master.key
+            chmod 600 ./config/master.key
+            echo ${RAILS_MASTER_KEY} >> ./config/master.key
       - run:
           name: docker-compose up
           command: |
