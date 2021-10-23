@@ -82,8 +82,13 @@ jobs:
             docker-compose build
             docker network create library_map-network
             docker-compose run app rails assets:precompile RAILS_ENV=production
-            docker-compose up -d
-            docker-compose exec app rails active_storage:install db:migrate RAILS_ENV=production
+            docker-compose up
+      - run: sleep 15
+      - run: 
+          name: set up database
+          command: |
+            docker-compose exec app rails active_storage:install RAILS_ENV=production
+            docker-compose exec app rails db:migrate RAILS_ENV=production
 
 workflows:
   version: 2
