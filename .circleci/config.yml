@@ -82,7 +82,7 @@ jobs:
             docker-compose build
             docker network create library_map-network
             docker-compose run app rails assets:precompile RAILS_ENV=production
-            docker-compose up
+            docker-compose up -d
       - run: sleep 15
       - run: 
           name: set up database
