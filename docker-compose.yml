@@ -11,8 +11,6 @@ services:
       - public-data:/library_map/public
       - tmp-data:/library_map/tmp
       - log-data:/library_map/log
-    ports:
-      - 3000:3000
     networks:
       - library_map-network
     stdin_open: true
