@@ -3,17 +3,14 @@ Library map for studys
 
 # DEMO
 1.Click the pin and library's name on the top page.
-![](app/assets/images/top-page.png)
-![](app/assets/images/map.png)
 2.You can see library's detail.
-![](app/assets/images/library_image.png)
-![](app/assets/images/library_detail.png)
+![demo](https://user-images.githubusercontent.com/83792679/139199193-59866df2-dde8-4ab1-b570-ba695828ebdc.gif)
 
 # Features
 'Library map for studys' is an application that allows you to find a library where you can study.
 You can see whether the library has study space and outlet.
 You can also check the list of libraries registered in the app on Google Map on the top page.
-Users can freely register library information and share library information that users can study with each other.
+Let's share library information that can concentrate on studying.
 
 # Requirement
 * macOS
