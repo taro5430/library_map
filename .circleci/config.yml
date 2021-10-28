@@ -89,7 +89,6 @@ jobs:
           name: set up database
           command: |
              docker-compose exec app rails active_storage:install RAILS_ENV=production
-             docker-compose exec app rails db:migrate RAILS_ENV=production
 
 workflows:
   version: 2
