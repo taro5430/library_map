@@ -4,8 +4,8 @@ services:
     build: .
     environment:
       - region=ap-northeast-1
-      - access_key_id=Rails.application.credentials[:aws][:access_key_id]
-      - secret_access_key=Rails.application.credentials[:aws][:secret_access_key]
+      - access_key_id=<%= Rails.application.credentials[:aws][:access_key_id] %>
+      - secret_access_key=<%= Rails.application.credentials[:aws][:secret_access_key] %>
     volumes:
       - .:/library_map
       - public-data:/library_map/public
