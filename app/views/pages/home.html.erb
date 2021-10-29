@@ -41,4 +41,4 @@
     <% end %>
   }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhwT1YDk1ivaKA538KPwaNqFgkSSuJEkc&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials[:gmap][:api_key] %>&callback=initMap" async defer></script>
