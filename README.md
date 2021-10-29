@@ -3,8 +3,8 @@ Library map for studys
 
 # DEMO
 1.Click the pin and library's name on the top page.  
-2.You can see library's detail.
-![demo](https://user-images.githubusercontent.com/83792679/139252208-0fc1cda3-bcd2-422d-9991-bc1e69d5b12d.gif)
+2.You can see library's detail.  
+![demo2](https://user-images.githubusercontent.com/83792679/139258965-3acd56a9-9617-4743-a726-d0b14b0a57c3.gif)
 
 # Features
 'Library map for studys' is an application that allows you to find a library where you can study.
