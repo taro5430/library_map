@@ -76,7 +76,6 @@ jobs:
             touch ./config/master.key
             chmod 600 ./config/master.key
             echo ${RAILS_MASTER_KEY} >> ./config/master.key
-            echo ${ENV} | base64 --decode > ./.env
       - run:
           name: docker-compose up
           command: |
