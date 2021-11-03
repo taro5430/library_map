@@ -76,7 +76,11 @@ jobs:
             touch ./config/master.key
             chmod 600 ./config/master.key
             echo ${RAILS_MASTER_KEY} >> ./config/master.key
-            mv config/database.yml.ci config/database.yml
+            echo DB_DATABASE=${DB_DATABASE} >> ./.env
+            echo DB_USERNAME=${DB_USERNAME} >> ./.env
+            echo DB_HOST=${DB_HOST} >> ./.env
+            echo DB_PASSWORD=${DB_PASSWORD} >> ./.env
+            echo DB_PORT=${DB_PORT} >> ./.env
       - run:
           name: docker-compose up
           command: |
