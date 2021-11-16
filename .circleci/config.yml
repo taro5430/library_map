@@ -88,11 +88,14 @@ jobs:
             docker network create library_map-network
             docker-compose run app rails assets:precompile RAILS_ENV=production
             docker-compose up -d
+      - run: sleep 30
       - run:
           name: set up database
           command: |
-            docker-compose exec app sleep 30 && rails active_storage:install RAILS_ENV=production
-            docker-compose exec app sleep 60 && rails db:create db:migrate RAILS_ENV=production
+            docker-compose exec app bash -c "sleep 30 && rails active_storage:install RAILS_ENV=production"
+            docker-compose exec app bash -c "sleep 60 && rails active_storage:install RAILS_ENV=production"
+            docker-compose exec app bash -c "sleep 30 && rails db:create db:migrate RAILS_ENV=production"
+            docker-compose exec app bash -c "sleep 60 && rails db:create db:migrate RAILS_ENV=production"
           #  docker-compose exec app rails active_storage:install RAILS_ENV=production
           #  docker-compose exec app rails db:create db:migrate RAILS_ENV=production
              
