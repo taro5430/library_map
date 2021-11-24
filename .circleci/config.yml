@@ -76,11 +76,6 @@ jobs:
             touch ./config/master.key
             chmod 600 ./config/master.key
             echo ${RAILS_MASTER_KEY} >> ./config/master.key
-            echo DB_DATABASE=${DB_DATABASE} >> ./.env
-            echo DB_USERNAME=${DB_USERNAME} >> ./.env
-            echo DB_HOST=${DB_HOST} >> ./.env
-            echo DB_PASSWORD=${DB_PASSWORD} >> ./.env
-            echo DB_PORT=${DB_PORT} >> ./.env
       - run:
           name: docker-compose up
           command: |
@@ -94,17 +89,6 @@ jobs:
           command: |
             docker-compose exec app rails active_storage:install RAILS_ENV=production
             docker-compose exec app rails db:create db:migrate RAILS_ENV=production
-      - run:
-          name: get docker resources
-          command: |
-            set -e
-            docker-compose logs --no-color >& logs.txt
-            sudo journalctl -ae -u docker.service -n 10000 &> docker-daemon-logs-long.json
-          when: always
-      - store_artifacts:
-          path: docker-daemon-logs-long.json
-      - store_artifacts:
-          path: logs.txt
              
 workflows:
   version: 2
