@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   let!(:user) { create(:user) }
+  let!(:guest_user) { create(:user, :guest) }
 
   describe 'registration #new' do
     it 'responds successfully' do
@@ -75,20 +76,65 @@ RSpec.describe "Users", type: :request do
     let(:update_params) { { name: "updateuser", current_password: user.password } }
     let(:invalid_update_params) { { name: nil, current_password: user.password } }
 
-    before do
-      sign_in(user)
+    describe 'login as a user' do
+      before do
+        sign_in(user)
+      end
+
+      context 'valid params' do
+        it 'responds successfully' do
+          put user_registration_path, params: { user: update_params }
+          expect(response).to have_http_status 302
+        end
+
+        it 'update user information' do
+          expect do
+            put user_registration_path, params: { user: update_params }
+          end.to change { User.find(user.id).name }.from('testuser').to('updateuser')
+        end
+
+        it 'redirect to root' do
+          put user_registration_path, params: { user: update_params }
+          expect(response).to redirect_to root_path
+        end
+      end
+
+      context 'invalid params' do
+        it 'responds successfully' do
+          put user_registration_path, params: { user: invalid_update_params }
+          expect(response).to have_http_status 200
+        end
+
+        it 'update user information not successfully' do
+          expect do
+            put user_registration_path, params: { user: invalid_update_params }
+          end.not_to change(User.find(user.id), :name)
+        end
+
+        it 'show errow message' do
+          put user_registration_path, params: { user: invalid_update_params }
+          expect(response.body).to include '1件のエラーが発生したためユーザーは保存されませんでした。'
+          expect(response.body).to include 'ユーザー名を入力してください'
+        end
+      end
     end
 
-    context 'valid params' do
+    describe 'login as a guest user' do
+      before do
+        sign_in(guest_user)
+      end
+
       it 'responds successfully' do
         put user_registration_path, params: { user: update_params }
         expect(response).to have_http_status 302
+        put user_registration_path, params: { user: invalid_update_params }
+        expect(response).to have_http_status 302
       end
 
-      it 'update user information' do
+      it "can't update user information even with valid params" do
         expect do
           put user_registration_path, params: { user: update_params }
-        end.to change { User.find(user.id).name }.from('testuser').to('updateuser')
+        end.not_to change(User.find(guest_user.id), :name)
       end
 
       it 'redirect to root' do
@@ -96,46 +142,51 @@ RSpec.describe "Users", type: :request do
         expect(response).to redirect_to root_path
       end
     end
-
-    context 'invalid params' do
-      it 'responds successfully' do
-        put user_registration_path, params: { user: invalid_update_params }
-        expect(response).to have_http_status 200
-      end
-
-      it 'update user information not successfully' do
-        expect do
-          put user_registration_path, params: { user: invalid_update_params }
-        end.not_to change(User.find(user.id), :name)
-      end
-
-      it 'show errow message' do
-        put user_registration_path, params: { user: invalid_update_params }
-        expect(response.body).to include '1件のエラーが発生したためユーザーは保存されませんでした。'
-        expect(response.body).to include 'ユーザー名を入力してください'
-      end
-    end
   end
 
   describe 'registration #destroy' do
-    before do
-      sign_in(user)
-    end
+    describe 'login as a user' do
+      before do
+        sign_in(user)
+      end
 
-    it 'responds successfully' do
-      delete user_registration_path
-      expect(response).to have_http_status 302
-    end
-
-    it 'delete user' do
-      expect do
+      it 'responds successfully' do
         delete user_registration_path
-      end.to change(User, :count).by(-1)
+        expect(response).to have_http_status 302
+      end
+
+      it 'delete user' do
+        expect do
+          delete user_registration_path
+        end.to change(User, :count).by(-1)
+      end
+
+      it 'redirect to' do
+        delete user_registration_path
+        expect(response).to redirect_to root_path
+      end
     end
 
-    it 'redirect to' do
-      delete user_registration_path
-      expect(response).to redirect_to root_path
+    describe 'login as a guest user' do
+      before do
+        sign_in(guest_user)
+      end
+
+      it 'responds successfully' do
+        delete user_registration_path
+        expect(response).to have_http_status 302
+      end
+
+      it 'delete user' do
+        expect do
+          delete user_registration_path
+        end.not_to change(User, :count)
+      end
+
+      it 'redirect to' do
+        delete user_registration_path
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
@@ -191,6 +242,13 @@ RSpec.describe "Users", type: :request do
 
     it 'logout successfully' do
       expect(response).to redirect_to root_path
+    end
+  end
+
+  describe 'session #guest_sign_in' do
+    it 'responds successfully' do
+      post users_guest_sign_in_path
+      expect(response).to have_http_status 302
     end
   end
 end
