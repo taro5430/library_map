@@ -31,4 +31,17 @@ RSpec.describe "Pages", type: :request do
       expect(response).to have_http_status 200
     end
   end
+
+  describe "GET /pages/admin" do
+    let(:admin_user) { create(:user, :admin) }
+    
+    before do
+      sign_in(admin_user)
+    end
+
+    it "responds successfully" do
+      get pages_admin_path
+      expect(response).to have_http_status 200
+    end
+  end
 end
