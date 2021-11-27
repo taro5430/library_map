@@ -63,6 +63,19 @@
           <p>退会しました</p>
         <% end %>
       </div>
+      <% if current_user&.admin? %>
+        <div class="user-info pt-2 mt-2 col-md-12 col-sm-12">
+          <div class="admin-authority mt-2">
+            <p><span class="px-4 py-2">管理者権限</span></p>
+          </div>
+          <div class="edit-button ps-3 mb-2">
+            <%= link_to "編集する",[:edit,@library], class: "edit-link" %>
+          </div>
+          <div class="delete-button ps-3 mb-2">
+            <%= link_to "削除する", @library, method: :delete, data:{confirm:"本当に削除しますか"}, class: "delete-link" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
