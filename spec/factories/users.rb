@@ -17,5 +17,9 @@ FactoryBot.define do
     trait :update do
       name { 'updateuser' }
     end
+
+    trait :admin do
+      admin { true }
+    end
   end
 end

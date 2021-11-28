@@ -6,4 +6,9 @@ class PagesController < ApplicationController
   def profile
     @libraries = current_user.libraries.all
   end
+
+  def admin
+    @user = User.all
+    @libraries = Library.all
+  end
 end
