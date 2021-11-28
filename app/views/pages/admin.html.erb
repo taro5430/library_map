@@ -1,0 +1,33 @@
+<div class="container container-fluid profile-page">
+  <div class="col-md-9 col-sm12 registerd-libraries">
+    <h4 class="page-head pb-2">登録済み図書館</h4>
+    <div class="row">
+      <% if @libraries.present? %>
+        <% @libraries.each do |library| %>
+          <div class="col-sm-6 col-md-5 col-lg-4">
+            <div class="libraries-frame-inner">
+              <%= link_to library do %>
+                <div class="libraries-image-frame">
+                  <% if library.avatar.attached? %>
+                    <%= image_tag library.avatar, class: "libraries-image" %>
+                  <% else %>
+                    <%= image_tag 'no-image.png', class: "libraries-image" %>
+                  <% end %>
+                </div>
+                <div class="libraries-information pt-3 px-3">
+                  <p class="libraries-name mb-2"><%= library.name %></p>
+                  <p class="libraries-address mb-2"><%= library.address %></p>
+                  <p class="user-name"><%= library.user.name %></p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="no-library-notice">
+          <p>登録済みの図書館はありません</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

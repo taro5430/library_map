@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :system do
   let!(:user) { create(:user) }
   let!(:guest_user) { create(:user, :guest) }
+  let!(:admin_user) { create(:user, :admin) }
+  let!(:user_library) { create(:library, user_id: user.id) }
+  let!(:admin_user_library) { create(:library, user_id: admin_user.id) }
 
   describe 'before login' do
     before do
@@ -171,12 +174,13 @@ RSpec.describe User, type: :system do
         expect(page).to have_content 'ユーザー情報'
         expect(page).to have_content user.name
         expect(page).to have_content user.email
-        expect(page).to have_content '編集する'
+        expect(page).to have_content 'ユーザー情報編集'
+        expect(page).not_to have_content '管理者権限'
       end
 
       describe 'edit user' do
         before do
-          click_link '編集する'
+          click_link 'ユーザー情報編集'
         end
 
         it 'check the edit page' do
@@ -229,6 +233,7 @@ RSpec.describe User, type: :system do
       end
     end
   end
+
 
   describe 'after login as a guest user' do
     before do
@@ -289,6 +294,68 @@ RSpec.describe User, type: :system do
       it 'click the logout' do
         click_link 'ログアウト'
         expect(page).to have_content 'ログアウトしました。'
+      end
+    end
+
+  describe 'admin_user' do
+    before do
+      admin_login(admin_user)
+      visit '/'
+      click_on 'アイコン画像'
+    end
+
+    it 'check the user information in the profile page' do
+      expect(current_path).to eq pages_profile_path
+      expect(page).to have_content 'ユーザー情報'
+      expect(page).to have_content admin_user.name
+      expect(page).to have_content admin_user.email
+      expect(page).to have_content '編集する'
+      expect(page).to have_content '管理者権限'
+    end
+
+    describe 'click admin oparation' do
+      before do
+        click_link '管理者権限'
+      end
+
+      it 'check the admin page' do
+        expect(current_path).to eq pages_admin_path
+      end
+
+      it "display all user's libraries" do
+        expect(page).to have_selector "img[src$='library_image.jpg']"
+        expect(page).to have_content user_library.name
+        expect(page).to have_content user_library.address
+        expect(page).to have_content user.name
+        expect(page).to have_content admin_user_library.name
+        expect(page).to have_content admin_user_library.address
+        expect(page).to have_content admin_user.name
+      end
+
+      describe "can edit other user's library" do
+        before do
+          click_link user_library.name
+        end
+
+        it 'show admin authority button' do
+          expect(current_path).to eq library_path(user_library.id)
+          expect(page).to have_content '管理者権限'
+          expect(page).to have_content '編集する'
+          expect(page).to have_content '削除する'
+        end
+
+        it "can edit other user's library" do
+          click_link '編集する'
+          expect(current_path).to eq edit_library_path(user_library.id)
+        end
+
+        it "can delete other user's library" do
+          page.accept_confirm do
+            click_link '削除する'
+          end
+          expect(current_path).to eq pages_profile_path
+          expect(page).to have_content '削除しました'
+        end
       end
     end
   end
