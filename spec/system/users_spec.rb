@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :system do
   let!(:user) { create(:user) }
+  let!(:guest_user) { create(:user, :guest) }
   let!(:admin_user) { create(:user, :admin) }
   let!(:user_library) { create(:library, user_id: user.id) }
   let!(:admin_user_library) { create(:library, user_id: admin_user.id) }
@@ -15,6 +16,8 @@ RSpec.describe User, type: :system do
       it 'has signup and login' do
         expect(page).to have_content '新規登録'
         expect(page).to have_content 'ログイン'
+        expect(page).to have_content 'ゲストログイン（閲覧用）'
+        expect(page).not_to have_content 'ログアウト'
         expect(page).not_to have_selector '.header-host-icon'
       end
     end
@@ -105,35 +108,48 @@ RSpec.describe User, type: :system do
     end
 
     describe "login" do
-      before do
-        click_link 'ログイン'
-      end
+      describe 'as a user' do
+        before do
+          click_link 'ログイン'
+        end
 
-      it 'check the login page' do
-        expect(current_path).to eq new_user_session_path
-      end
+        it 'check the login page' do
+          expect(current_path).to eq new_user_session_path
+        end
 
-      context 'valid information' do
-        it 'login sucessfully' do
-          fill_in 'Eメール', with: user.email
-          fill_in 'パスワード', with: user.password
-          click_button 'ログイン'
-          expect(page).to have_content 'ログインしました。'
+        context 'valid information' do
+          it 'login sucessfully' do
+            fill_in 'Eメール', with: user.email
+            fill_in 'パスワード', with: user.password
+            click_button 'ログイン'
+            expect(page).to have_content 'ログインしました。'
+          end
+        end
+
+        context 'invalid information' do
+          it 'login not successfully' do
+            fill_in 'Eメール', with: user.email
+            fill_in 'パスワード', with: 'otherpassword'
+            click_button 'ログイン'
+            expect(page).to have_content 'Eメールまたはパスワードが違います。'
+          end
         end
       end
 
-      context 'invalid information' do
-        it 'login not successfully' do
-          fill_in 'Eメール', with: user.email
-          fill_in 'パスワード', with: 'otherpassword'
-          click_button 'ログイン'
-          expect(page).to have_content 'Eメールまたはパスワードが違います。'
+      describe 'as a guest user' do
+        before do
+          click_link 'ゲストログイン（閲覧用）'
+        end
+
+        it 'login successfully' do
+          expect(current_path).to eq '/'
+          expect(page).to have_content 'ゲストユーザーとしてログインしました。'
         end
       end
     end
   end
 
-  describe 'after login' do
+  describe 'after login as a user' do
     before do
       login(user)
       visit '/'
@@ -143,6 +159,7 @@ RSpec.describe User, type: :system do
       it 'has icon' do
         expect(page).not_to have_content '新規登録'
         expect(page).not_to have_content 'ログイン'
+        expect(page).to have_content 'ログアウト'
         expect(page).to have_selector '.header-host-icon'
       end
     end
@@ -216,6 +233,69 @@ RSpec.describe User, type: :system do
       end
     end
   end
+
+
+  describe 'after login as a guest user' do
+    before do
+      login(guest_user)
+      visit '/'
+    end
+
+    describe 'check header user items' do
+      it 'has icon' do
+        expect(page).not_to have_content '新規登録'
+        expect(page).not_to have_content 'ログイン'
+        expect(page).to have_content 'ログアウト'
+        expect(page).to have_selector '.header-host-icon'
+      end
+    end
+
+    describe 'profile page' do
+      before do
+        click_on 'アイコン画像'
+      end
+
+      it 'check the user information in the profile page' do
+        expect(current_path).to eq pages_profile_path
+        expect(page).to have_content 'ユーザー情報'
+        expect(page).to have_content guest_user.name
+        expect(page).to have_content guest_user.email
+        expect(page).to have_content '編集する'
+      end
+
+      describe 'edit user' do
+        before do
+          click_link '編集する'
+        end
+
+        it 'check the edit page' do
+          expect(current_path).to eq edit_user_registration_path
+        end
+
+        it "can't edit user information" do
+          fill_in 'Eメール', with: 'edit@example.com'
+          fill_in '現在のパスワード', with: 'password'
+          click_button '更新'
+          expect(current_path).to eq '/'
+          expect(page).to have_content 'ゲストユーザーの更新・削除はできません'
+        end
+
+        it "can't delete account" do
+          page.accept_confirm do
+            click_link 'アカウントを削除する'
+          end
+          expect(current_path).to eq '/'
+          expect(page).to have_content 'ゲストユーザーの更新・削除はできません'
+        end
+      end
+    end
+
+    describe 'logout' do
+      it 'click the logout' do
+        click_link 'ログアウト'
+        expect(page).to have_content 'ログアウトしました。'
+      end
+    end
 
   describe 'admin_user' do
     before do

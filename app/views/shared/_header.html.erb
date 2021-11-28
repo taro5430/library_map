@@ -48,6 +48,9 @@
           <li class="nav-item">
             <%= link_to 'ログイン', :new_user_session, {class:"nav-link mx-3 my-2"} %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class:"nav-link mx-3 my-2", method: :post %>
+          </li>
         </ul>
       </div>
     <% end %>
