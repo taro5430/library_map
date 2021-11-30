@@ -1,0 +1,25 @@
+<div class="container container-fluid registerd-libraries">
+  <h4 class="page-head">コメント一覧</h4>
+  <div class="row">
+    <% if @comments.present? %>
+        <table class="library-info">
+          <tbody>
+            <tr>
+              <th class="col-lg-1 col-sm-2">ユーザー名</th>
+              <th class="col-lg-11 col-sm-10">コメント</th>
+            </tr>
+            <% @comments.each do |comment| %>
+              <tr>
+                <td class="col-lg-1 col-sm-2"><%= comment.user.name %></th>
+                <td class="col-lg-11 col-sm-10"><%= comment.content %></th>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    <% else %>
+      <div class="no-library-notice">
+        <p>コメントはありません</p>
+      </div>
+    <% end %>
+  </div>
+</div>

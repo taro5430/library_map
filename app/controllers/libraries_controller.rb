@@ -21,6 +21,9 @@ class LibrariesController < ApplicationController
   def show
     @library = Library.find(params[:id])
     @user = User.find_by(id: @library.user_id)
+    if current_user
+      @comment = current_user.comments.new
+    end
   end
 
   def search

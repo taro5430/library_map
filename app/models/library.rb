@@ -7,6 +7,7 @@ class Library < ApplicationRecord
   belongs_to :user
 
   has_one_attached :avatar
+  has_many :comments, dependent: :destroy
 
   def self.search(keyword)
     Library.where(["name LIKE ? or address LIKE ? or access LIKE? or detail LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"])

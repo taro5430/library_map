@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   end
   get 'pages/admin'
   get '/libraries/search', to: 'libraries#search'
-  resources :libraries
+  resources :libraries do
+    resources :comments, only: [:index, :create]
+  end
+  resources :comments, only: [:edit, :update, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
