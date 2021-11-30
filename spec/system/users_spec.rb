@@ -234,7 +234,6 @@ RSpec.describe User, type: :system do
     end
   end
 
-
   describe 'after login as a guest user' do
     before do
       login(guest_user)
@@ -260,12 +259,12 @@ RSpec.describe User, type: :system do
         expect(page).to have_content 'ユーザー情報'
         expect(page).to have_content guest_user.name
         expect(page).to have_content guest_user.email
-        expect(page).to have_content '編集する'
+        expect(page).to have_content 'ユーザー情報編集'
       end
 
       describe 'edit user' do
         before do
-          click_link '編集する'
+          click_link 'ユーザー情報編集'
         end
 
         it 'check the edit page' do
@@ -296,6 +295,7 @@ RSpec.describe User, type: :system do
         expect(page).to have_content 'ログアウトしました。'
       end
     end
+  end
 
   describe 'admin_user' do
     before do

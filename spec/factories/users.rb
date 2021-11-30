@@ -21,6 +21,7 @@ FactoryBot.define do
     trait :guest do
       name { 'guest_user' }
       email { 'guest@example.com' }
+    end
 
     trait :admin do
       admin { true }
