@@ -11,3 +11,5 @@ ja:
         electrical_outlet: コンセントの有無
         image: 写真
         detail: 詳細コメント
+      comment:
+        content: コメント

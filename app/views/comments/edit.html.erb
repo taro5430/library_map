@@ -1,0 +1,24 @@
+<div class="container container-fluid">
+  <div class="row">
+    <div class="library-register-box col-7 my-5 p-4">
+      <div class="register-heading mb-4">
+        <h5>コメント編集</h5>
+      </div>
+      <%= render "shared/error", obj: @comment %>
+      <div class="update-content">
+        <p>図書館名：<%= @comment.library.name %></p>
+      </div>
+      <%= form_with model: @comment do |f| %>
+        <div class="update-content">
+          <%= f.label :content, "コメント", class:"mb-2 required-a" %>
+          <%= f.text_field :content, class:"form-control mb-4", placeholder:"#{@comment.content}"  %>
+        </div>
+        <div class="update-content">
+          <div class="row justify-content-center">
+            <%= f.submit "編集完了", class: "col-md-4 btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

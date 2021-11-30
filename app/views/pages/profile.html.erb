@@ -64,5 +64,33 @@
         <% end %>
       </div>
     </div>
+    <div class="col-md-10 col-sm12 registerd-libraries">
+      <h4 class="page-head pb-2">コメント一覧</h4>
+      <div class="row">
+        <% if @comments.present? %>
+        <table class="comment-info">
+          <tbody>
+            <tr>
+              <th class="col-md-2 col-sm-2">図書館名</th>
+              <th class="col-md-8 col-sm-8">コメント</th>
+              <th colspan="2",class="col-md-2 col-sm-2">編集</th>
+            </tr>
+            <% @comments.each do |comment| %>
+              <tr>
+                <td class="col-md-2 col-sm-2"><%= comment.library.name %></td>
+                <td class="col-md-8 col-sm-8"><%= comment.content %></td>
+                <td class="col-md-1 col-sm-1"><%=link_to "編集", edit_comment_path(comment.id) %></td>
+                <td class="col-md-1 col-sm-1"><%=link_to "削除", comment, method: :delete, data:{confirm:"本当に削除しますか"}, class: "delete-link" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+          <div class="no-library-notice">
+            <p>コメントはありません</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div> 

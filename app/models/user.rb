@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :libraries
   has_one_attached :avatar
+  has_many :comments
 
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|

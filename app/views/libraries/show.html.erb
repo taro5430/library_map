@@ -76,6 +76,24 @@
           </div>
         </div>
       <% end %>
+      <div class="user-info pt-2 pb-2 mt-2 col-md-12 col-sm-12">
+        <p><span class="px4 py-2">いいね数</span></p>
+        <%= link_to 'コメント一覧', library_comments_path(@library.id), class:'' %>
+      </div>
+      <% if current_user %>
+        <div class="user-info pt-2 mt-2 col-md-12 col-sm-12">
+          <div class="comment-sending mt-2">
+            <p><span class="px-4 py-2">コメントをしよう！</span></p>
+            <%= form_with model: [@library, @comment], method: :post do |f| %>
+              <% f.label :content, 'content' %>
+              <%= f.text_area :content,rows: 10, class:"col-md-10 col-sm-10" %>
+              <%= f.hidden_field :library_id, value: @library.id %>
+              <br>
+              <%= f.submit '投稿',class: 'mt-2 mb-2 btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

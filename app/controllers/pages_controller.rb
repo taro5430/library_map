@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
   def profile
     @libraries = current_user.libraries.all
+    @comments = current_user.comments.all
   end
 
   def admin
