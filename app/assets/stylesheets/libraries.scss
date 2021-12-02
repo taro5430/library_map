@@ -26,7 +26,7 @@
   max-height: 450px;
   object-fit: cover;
 }
-.library-info-heading span{
+.library-info-heading h4 span{
   background-color: #000;
   border-radius: 20px;
   color:#fff;
@@ -48,9 +48,10 @@
   border-radius: 20px;
   text-align: center;
 }
+.library-info p span,
 .user-info-heading p span,
 .admin-authority p span,
-.comment-sending p span{
+.sub-info p span{
   background: #000;
   border-radius:20px;
   color:#fff;

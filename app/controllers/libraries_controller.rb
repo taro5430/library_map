@@ -24,6 +24,7 @@ class LibrariesController < ApplicationController
     if current_user
       @comment = current_user.comments.new
     end
+    @like = Like.new
   end
 
   def search
