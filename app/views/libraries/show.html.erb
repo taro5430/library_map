@@ -8,8 +8,16 @@
           <%= image_tag 'no-image.png', class: "library-image" %>
         <% end %>
       </div>
-      <div class="library-info-heading p-2 mt-2">
+      <div class="library-info-heading p-2 mt-2 d-flex justify-content-between">
         <h4><span class="px-4 py-2">図書館情報</span></h4>
+        <div class="d-flex">
+          <h6><i class="fas fa-heart like-icon px-4 mx-2"></i><span class="like-count"><%= @library.likes.count %></span></h6>
+          <h6>
+            <%= link_to library_comments_path(@library.id), class: 'comment-link' do %>
+              <i class="fas fa-comment-dots comment-icon px-1 mx-2"></i>
+            <% end %>
+          </h6>
+        </div>
       </div>
       <table class="library-info">
         <tbody>
@@ -76,17 +84,25 @@
           </div>
         </div>
       <% end %>
-      <div class="user-info pt-2 pb-2 mt-2 col-md-12 col-sm-12">
-        <p><span class="px4 py-2">いいね数</span></p>
-        <%= link_to 'コメント一覧', library_comments_path(@library.id), class:'' %>
-      </div>
       <% if current_user %>
+        <div class="user-info pt-2 pb-2 mt-2 col-md-12 col-sm-12 comment-sending sub-info">
+          <p class='mt-2'><span class="px-4 py-2">いいね！</span></p>
+          <% if current_user.already_liked?(@library) %>
+            <%= link_to library_like_path(@library),method: :delete do %>
+              <i class="fas fa-heart unlike-btn"></i>
+            <% end %>
+          <% else %>
+            <%= link_to library_likes_path(@library), class: "like-link", method: :post do %>
+              <i class="far fa-heart like-btn" ></i>
+            <% end %>
+          <% end %>
+        </div>
         <div class="user-info pt-2 mt-2 col-md-12 col-sm-12">
-          <div class="comment-sending mt-2">
+          <div class="sub-info mt-2">
             <p><span class="px-4 py-2">コメントをしよう！</span></p>
             <%= form_with model: [@library, @comment], method: :post do |f| %>
               <% f.label :content, 'content' %>
-              <%= f.text_area :content,rows: 10, class:"col-md-10 col-sm-10" %>
+              <%= f.text_area :content, rows: 10, class:"col-md-10 col-sm-10", placeholder: 'コメントを記入。' %>
               <%= f.hidden_field :library_id, value: @library.id %>
               <br>
               <%= f.submit '投稿',class: 'mt-2 mb-2 btn btn-primary' %>

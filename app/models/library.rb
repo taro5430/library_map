@@ -8,6 +8,8 @@ class Library < ApplicationRecord
 
   has_one_attached :avatar
   has_many :comments, dependent: :destroy
+  has_many :likes
+  has_many :liked_users, through: :likes, source: :user
 
   def self.search(keyword)
     Library.where(["name LIKE ? or address LIKE ? or access LIKE? or detail LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"])
