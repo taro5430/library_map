@@ -17,8 +17,8 @@ RSpec.describe "Comments", type: :system do
         click_link library1.name
       end
 
-      it 'show create comment area' do
-        expect(page).to have_content 'コメント一覧'
+      it 'show comment items' do
+        expect(page).to have_selector '.comment-icon', visible: true
         expect(page).to have_content 'コメントをしよう！'
       end
 
@@ -26,9 +26,10 @@ RSpec.describe "Comments", type: :system do
         fill_in 'comment[content]', with: 'create comment'
         click_button '投稿'
         expect(page).to have_content 'コメントを登録しました'
-        click_link 'コメント一覧'
+        find(:css, '.comment-link').click
         expect(current_path).to eq library_comments_path(library1.id)
         expect(page).to have_content 'コメント一覧'
+        expect(page).to have_selector '.comment-icon', visible: true
         expect(page).to have_content 'ユーザー名'
         expect(page).to have_content 'コメント'
         expect(page).to have_content user1.name, count: 2
@@ -47,11 +48,12 @@ RSpec.describe "Comments", type: :system do
       end
 
       it "doesn't show comment area" do
-        expect(page).to have_content 'コメント一覧'
+        expect(page).to have_selector '.comment-icon'
         expect(page).not_to have_content 'コメントをしよう！'
-        click_link 'コメント一覧'
+        find(:css, '.comment-link').click
         expect(current_path).to eq library_comments_path(library1.id)
         expect(page).to have_content 'コメント一覧'
+        expect(page).to have_selector '.comment-icon', visible: true
         expect(page).to have_content 'ユーザー名'
         expect(page).to have_content 'コメント'
         expect(page).to have_content user1.name, count: 1
@@ -63,7 +65,7 @@ RSpec.describe "Comments", type: :system do
     end
   end
 
-  describe 'edit comment' do
+  describe 'check my comment' do
     before do
       login(user1)
       visit '/'
@@ -72,37 +74,57 @@ RSpec.describe "Comments", type: :system do
 
     it "show login_user's comment" do
       expect(page).to have_content 'コメント一覧'
+      expect(page).to have_selector '.comment-icon', visible: true
       expect(page).to have_content '図書館名'
-      expect(page).to have_content library1.name
-      expect(page).not_to have_content library2.name
+      expect(page).to have_link library1.name
+      expect(page).not_to have_link library2.name
       expect(page).to have_content 'コメント'
       expect(page).to have_content comment1.content
       expect(page).not_to have_content comment2.content
-      expect(page).to have_content '編集'
-      expect(page).to have_content '削除'
+      expect(page).to have_link '編集'
+      expect(page).to have_link '削除'
     end
 
-    it 'can edit comment' do
-      click_link '編集'
-      expect(current_path).to eq edit_comment_path(comment1.id)
-      expect(page).to have_content 'コメント編集'
-      expect(page).to have_content "図書館名：#{library1.name}"
-      expect(page).to have_content 'コメント'
-      expect(page).to have_field 'コメント', with: comment1.content
-      fill_in 'コメント', with: 'update content'
-      click_button '編集完了'
-      expect(current_path).to eq pages_profile_path
-      expect(page).to have_content 'update content'
-      expect(page).not_to have_content comment1.content
-    end
-
-    it "can't delete comment" do
-      page.accept_confirm do
-        click_link '削除'
+    describe 'edit comment' do
+      before do
+        click_link '編集'
       end
-      expect(page).to have_content 'コメントを削除しました'
-      expect(page).to have_content 'コメントはありません'
-      expect(page).not_to have_content comment1.content
+
+      it 'check comment edit page' do
+        expect(current_path).to eq edit_comment_path(comment1.id)
+        expect(page).to have_content 'コメント編集'
+        expect(page).to have_content "図書館名：#{library1.name}"
+        expect(page).to have_content 'コメント'
+        expect(page).to have_field 'コメント', with: comment1.content
+      end
+
+      it 'can edit comment' do
+        fill_in 'コメント', with: 'update content'
+        click_button '編集完了'
+        expect(current_path).to eq pages_profile_path
+        expect(page).to have_content 'コメントを更新しました'
+        expect(page).to have_content 'update content'
+        expect(page).not_to have_content comment1.content
+      end
+
+      it "can't edit comment with no content" do
+        fill_in 'コメント', with: ''
+        click_button '編集完了'
+        expect(current_path).to eq comment_path(comment1.id)
+        expect(page).to have_content 'コメントを更新できませんでした'
+        expect(page).to have_content 'コメントを入力してください'
+      end
+    end
+    
+    describe 'delete comment' do
+      it 'can delete comment' do
+        page.accept_confirm do
+          click_link '削除'
+        end
+        expect(page).to have_content 'コメントを削除しました'
+        expect(page).to have_content 'コメントはありません'
+        expect(page).not_to have_content comment1.content
+      end
     end
   end
 end
