@@ -115,7 +115,7 @@ RSpec.describe "Comments", type: :system do
         expect(page).to have_content 'コメントを入力してください'
       end
     end
-    
+
     describe 'delete comment' do
       it 'can delete comment' do
         page.accept_confirm do

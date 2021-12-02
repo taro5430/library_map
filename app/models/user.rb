@@ -20,6 +20,6 @@ class User < ApplicationRecord
   end
 
   def already_liked?(library)
-    self.likes.exists?(library_id: library.id)
+    likes.exists?(library_id: library.id)
   end
 end

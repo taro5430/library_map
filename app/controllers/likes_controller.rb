@@ -1,6 +1,6 @@
 class LikesController < ApplicationController
   def create
-    @like = current_user.likes.create(library_id: params[:library_id] )
+    @like = current_user.likes.create(library_id: params[:library_id])
     flash[:success] = "いいねしました"
     redirect_back(fallback_location: root_path)
   end
