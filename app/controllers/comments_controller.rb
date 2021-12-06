@@ -6,7 +6,9 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_user.comments.new(comment_params)
+    @library = @comment.library
     if @comment.save
+      @library.create_notification_comment!(current_user, @comment.id)
       flash[:success] = "コメントを登録しました"
       redirect_back(fallback_location: root_path)
     else

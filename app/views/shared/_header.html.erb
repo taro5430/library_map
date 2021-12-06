@@ -20,6 +20,16 @@
           <%= link_to "ログアウト", :destroy_user_session, {method: :delete, class: "nav-link"}  %>
           </li>
           <li class="nav-item">
+            <%= link_to notifications_path, class: "btn-default" do %>
+              <span class="fa-stack nav-link">
+                <i class="fas fa-bell fa-stack-2x bell align-bottom"></i>
+                <% if current_user.passive_notifications.where(checked: false).any? %>
+                  <i class="fa fa-circle fa-stack-1x mx-2 notification-mark"></i>
+                <% end %>
+              </span>
+            <% end %>
+          </li>
+          <li class="nav-item">
             <%= link_to "/pages/profile", {class:"nav-link"} do %>
               <% if current_user.avatar.present? %>
                 <%= image_tag current_user.avatar, alt: "アイコン画像",class:"header-host-icon" %>

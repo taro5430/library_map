@@ -1,6 +1,8 @@
 class LikesController < ApplicationController
   def create
     @like = current_user.likes.create(library_id: params[:library_id])
+    @library = Library.find(params[:library_id])
+    @library.create_notification_like!(current_user)
     flash[:success] = "いいねしました"
     redirect_back(fallback_location: root_path)
   end
