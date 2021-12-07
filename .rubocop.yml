@@ -10,6 +10,6 @@ AllCops:
     - "vendor/**/*"
     - "spec/spec_helper.rb"
 LineLength:
-  Max: 150
+  Max: 200
 Style/MixinUsage:
   Enabled: false

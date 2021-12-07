@@ -1,0 +1,31 @@
+<% visitor = notification.visitor %>
+
+<div class="user-view clearfix">
+  <div class="d-flex align-items-center">
+    <div class="user-icon">
+      <% if visitor.avatar.present? %>
+        <%= image_tag visitor.avatar, alt: "アイコン画像",class:"mx-2 p-1 header-host-icon" %>
+      <% else %>
+        <%= image_tag 'default_icon.jpg', alt: "アイコン画像", class:"mx-2 p-1 header-host-icon" %>
+      <% end %>
+    </div>
+    <div class="notification">
+      <span>
+        <%= visitor.name %>さんが
+        <% case notification.action %>
+          <% when 'like' then %>
+            あなたの登録した<%= link_to notification.library.name, library_path(notification.library.id) %>にいいねしました。
+          <% when 'comment' then %>
+            あなたの登録した<%= link_to notification.library.name, library_path(notification.library.id) %>にコメントしました。<br>
+        <% end %>
+      </span>
+    </div>
+    <div class="notification-time">
+      <span class="small text-muted text-right">(<%= time_ago_in_words(notification.created_at).upcase %>前)</span>
+    </div>
+  </div>
+  <div class="comment-content px-5">
+    <span class="text-muted"><%= Comment.find_by(id: notification.comment_id)&.content %></span>
+  </div>
+  <hr>
+</div>

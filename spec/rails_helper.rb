@@ -66,4 +66,5 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include FactoryBot::Syntax::Methods
   config.include LoginModule
+  config.include ActionView::Helpers::DateHelper
 end

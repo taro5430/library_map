@@ -16,5 +16,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
   end
   resources :comments, only: [:edit, :update, :destroy]
+  resources :notifications, only: :index
+  delete 'destroy_all_notifications' => 'notifications#destroy_all'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
