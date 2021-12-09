@@ -8,7 +8,7 @@ class Library < ApplicationRecord
 
   has_one_attached :avatar
   has_many :comments, dependent: :destroy
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
   has_many :notifications, dependent: :destroy
 
@@ -29,18 +29,10 @@ class Library < ApplicationRecord
   end
 
   def create_notification_comment!(current_user, comment_id)
-    temp_ids = Comment.select(:user_id).where(library_id: id).where.not(user_id: current_user.id).distinct
-    temp_ids.each do |temp_id|
-      save_notification_comment!(current_user, comment_id, temp_id['user_id'])
-    end
-    save_notification_comment!(current_user, comment_id, user_id) if temp_ids.blank?
-  end
-
-  def save_notification_comment!(current_user, comment_id, visited_id)
     notification = current_user.active_notifications.new(
       library_id: id,
       comment_id: comment_id,
-      visited_id: visited_id,
+      visited_id: user_id,
       action: 'comment'
     )
     if notification.visitor_id == notification.visited_id
