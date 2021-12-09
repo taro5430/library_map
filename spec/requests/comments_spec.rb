@@ -43,6 +43,12 @@ RSpec.describe "Comments", type: :request do
       end.to change(user.comments, :count).by(1)
     end
 
+    it 'save comment notification successfully' do
+      expect do
+        post library_comments_path(library.id), params: { comment: comment_params }
+      end.to change(user.active_notifications, :count).by(1)
+    end
+
     it 'redirect to library show page' do
       post library_comments_path(library.id), params: { comment: comment_params }
       expect(response).to redirect_to root_path
