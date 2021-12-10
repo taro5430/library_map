@@ -1,10 +1,8 @@
+# Library map for study
 <div style='text-align:right'>
   <img src='https://img.shields.io/badge/build-passing-brightgreen'>
-  <img src='https://img.shields.io/badge/deploy-passing-brightgreen' class='float-end'>
+  <img src='https://img.shields.io/badge/deploy-passing-brightgreen'>
 </div>
-
-
-# Library map for study
 
 ## 概要
 「Library map for study」は勉強を目的とした方のための図書館まとめアプリです。
