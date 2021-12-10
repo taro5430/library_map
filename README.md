@@ -1,7 +1,8 @@
-<div style='text-align: right'>
+<div style='text-align:right'>
   <img src='https://img.shields.io/badge/build-passing-brightgreen'>
-  <img src='https://img.shields.io/badge/deploy-passing-brightgreen'>
+  <img src='https://img.shields.io/badge/deploy-passing-brightgreen' class='float-end'>
 </div>
+
 
 # Library map for study
 
@@ -56,18 +57,18 @@
 
 ## 環境
 * ホストOS  
-  <img src='https://img.shields.io/badge/-Mac-black?'>  
+  <img src='https://img.shields.io/badge/-Mac-black?'>
 
 * 言語  
-  <div class='d-flex'>
+  <span class='d-flex'>
     <img src='https://img.shields.io/badge/-HTML5-E34F26?logo=HTML5&logoColor=white'>
     <img src='https://img.shields.io/badge/-CSS3-1572B6?logo=CSS3'>
     <img src='https://img.shields.io/badge/-Javascript-black?logo=Javascript'>
     <img src='https://img.shields.io/badge/-Ruby-CC342D?logo=ruby'>
-  </div>
+  </span>
 
 * フレームワーク  
-  <img src='https://img.shields.io/badge/-Ruby on rails-CC0000?logo=ruby'>  
+  <img src='https://img.shields.io/badge/-Ruby on rails-CC0000?logo=ruby'>
 
 * CSSフレームワーク  
   <img src='https://img.shields.io/badge/-Bootstrap-563D7C?logo=Bootstrap&logoColor=white'>  
@@ -78,26 +79,26 @@
 * データベース  
   <img src='https://img.shields.io/badge/-MySQL-4479A1?logo=MySQL&logoColor=white'>  
 
-* インフラ
-  <div class='d-flex'>
+* インフラ  
+  <span class='d-flex'>
     <img src='https://img.shields.io/badge/-Docker-2496ED?logo=Docker&logoColor=white'>
     <img src='https://img.shields.io/badge/-Amazon AWS-232F3E?logo=Amazon AWS'>
     <img src='https://img.shields.io/badge/-EC2-orange?logo=Amazon AWS'>
     <img src='https://img.shields.io/badge/-S3-569A31?logo=Amazon S3&logoColor=white'>
     <img src='https://img.shields.io/badge/-RDS-563D7C?logo=Amazon AWS'>
     <img src='https://img.shields.io/badge/-Route 53-563D7C?logo=Amazon AWS'>
-  </div>
+  </span>
 
 * テストフレームワーク  
   <img src='https://img.shields.io/badge/-RSpec-black?'>  
 
-* その他ツールなど
-  <div class='d-flex'>
+* その他ツールなど  
+  <span class='d-flex'>
     <img src='https://img.shields.io/badge/-Git-black?&textColor=orange'>
     <img src='https://img.shields.io/badge/-GitHub-181717?logo=GitHub'>
     <img src='https://img.shields.io/badge/-RuboCop-black?'>
     <img src='https://img.shields.io/badge/-CirclCI-343434?logo=CircleCI'>
-  </div>
+  </span>
 
 ## アプリの起動方法
 開発環境でのアプリの起動方法は下記の通りです。  
