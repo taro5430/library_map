@@ -36,7 +36,7 @@ RSpec.describe "Notifications", type: :system do
       expect(page).to have_content 'create comment'
       expect(page).to have_content "#{user2.name}さんが あなたの登録した#{library.name}にいいねしました。"
       expect(page).to have_content "(#{time_ago_in_words(Notification.second.created_at).upcase}前)"
-      click_link 'Library map for studies'
+      click_link 'Library map for study'
       expect(page).not_to have_selector '.notication-mark'
     end
   end

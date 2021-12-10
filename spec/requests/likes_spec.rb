@@ -26,6 +26,12 @@ RSpec.describe "Likes", type: :request do
       end.to change(library.likes, :count).by(1)
     end
 
+    it 'save like notification successfully' do
+      expect do
+        post library_likes_path(library.id)
+      end.to change(user.active_notifications, :count).by(1)
+    end
+
     it 'redirect to root path' do
       post library_likes_path(library.id)
       expect(response).to redirect_to root_path
